@@ -31,7 +31,15 @@
   nav { display: flex; gap: 24px; }
   nav a { text-decoration: none; font-size: .85rem; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; }
   nav a:hover, nav a:focus-visible { color: var(--acc); }
-  @media (max-width: 1040px) { nav { display: none; } }
+  .menu-btn { display: none; background: none; border: 1px solid #ffffff30; border-radius: 999px; color: var(--text); font: 600 .8rem Inter, sans-serif; padding: 8px 14px; cursor: pointer; }
+  @media (max-width: 1040px) {
+    nav { display: none; }
+    header .wrap { gap: 8px; }
+    .hdr-cta { margin-left: auto; }
+    .menu-btn { display: block; }
+    header.open nav { display: flex; flex-direction: column; gap: 4px; position: absolute; top: 64px; left: 0; right: 0; padding: 8px 16px 16px; background: rgb(6 20 64 / .97); border-bottom: 1px solid #ffffff1a; }
+    header.open nav a { padding: 10px 0; font-size: 1rem; }
+  }
 
   /* hero */
   #home { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 96px; }
@@ -61,6 +69,16 @@
 
   .quote { font: 400 clamp(1.8rem, 4vw, 3rem)/1.1 Anton, sans-serif; text-transform: uppercase; color: var(--text); max-width: 860px; }
   .quote em { font-style: normal; color: var(--ok); }
+  .mindset { list-style: none; counter-reset: m; margin-top: 48px; max-width: 860px; }
+  .mindset li { counter-increment: m; display: flex; gap: 24px; align-items: baseline; border-top: 1px solid #ffffff1f; padding: 20px 0; font-size: clamp(1.2rem, 2.5vw, 1.6rem); color: var(--text); }
+  .mindset li::before { content: counter(m, decimal-leading-zero); font: .9rem Anton, sans-serif; color: var(--acc); }
+  .label { font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--acc); }
+
+  /* header extras: CV/Email appear after the hero, scroll progress line, active section link */
+  .hdr-cta { display: flex; gap: 8px; opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; }
+  header.scrolled .hdr-cta { opacity: 1; visibility: visible; }
+  .progress { position: absolute; left: 0; bottom: -1px; width: 100%; height: 2px; background: var(--acc); transform-origin: left; transform: scaleX(0); }
+  nav a.active { color: var(--acc); }
 
   #statement h2 { font-size: clamp(2.5rem, 7vw, 5.5rem); max-width: 900px; }
   #statement h2 em { font-style: normal; color: var(--ok); }
@@ -72,7 +90,7 @@
   .card { background: var(--card); border: 1px solid #ffffff0d; border-radius: 16px; padding: 28px; }
   .card h3 { font-size: 2.4rem; }
   /* subgrid lines up title / text / tags / link rows across cards in the same row */
-  .project { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 8px; }
+  .project { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 8px; }
   .project .tags { align-self: start; }
   .more { align-self: end; padding-top: 8px; }
   .card p strong { color: var(--text); }
@@ -96,6 +114,7 @@
   .btn { display: inline-block; margin-top: 32px; background: var(--acc); color: var(--bg); text-decoration: none; font-weight: 600; padding: 16px 32px; border-radius: 999px; }
   .btn.ghost { background: none; color: var(--text); border: 1px solid #ffffff30; margin-left: 8px; }
   .links { display: flex; justify-content: center; gap: 24px; margin-top: 32px; }
+  .btn.sm { margin: 0; padding: 8px 16px; font-size: .8rem; }
   footer { text-align: center; padding: 32px 16px; font-size: .8rem; color: var(--muted); }
 
   /* scroll reveal */
@@ -113,7 +132,7 @@
 <header>
   <div class="wrap">
     <a class="logo" href="#home">MK.</a>
-    <nav aria-label="Main">
+    <nav id="main-nav" aria-label="Main">
       <a href="#about">About</a>
       <a href="#motivation">Motivation</a>
       <a href="#experience">Experience</a>
@@ -122,7 +141,13 @@
       <a href="#interests">Interests</a>
       <a href="#contact">Contact</a>
     </nav>
+    <div class="hdr-cta">
+      <a class="btn sm" href="cv.pdf" download>Download CV</a>
+      <a class="btn sm ghost" href="mailto:markokushta39@gmail.com">Email</a>
+    </div>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
   </div>
+  <div class="progress" aria-hidden="true"></div>
 </header>
 
 <main>
@@ -167,6 +192,11 @@
       <div class="head reveal"><span class="num">02</span><h2>Motivation</h2></div>
       <p class="quote reveal">Curious first. <em>Simple always.</em></p>
       <p class="bio reveal">Years ago, hunting for a Skyrim modding tool, I landed on GitHub and spent hours reading someone else's code. The idea that people just share how things work, openly, hooked me for good. I'm still that curious: I benchmark things nobody asked me to, reverse-engineer tools with thin docs, and keep code simple so the next person doesn't need me to explain it. Next on the list: kernel development.</p>
+      <ol class="mindset reveal" aria-label="Mindset">
+        <li>If it's hard to explain, it's too complicated.</li>
+        <li>Benchmark it before you believe it.</li>
+        <li>Own it end to end, from the first design to the last bug report.</li>
+      </ol>
     </div>
   </section>
 
@@ -202,10 +232,10 @@
     <div class="wrap">
       <div class="head reveal"><span class="num">04</span><h2>Projects</h2></div>
       <div class="grid reveal">
-        <article class="card project"><h3>Crypto Trading Desk</h3><p>Real-time trading desk: two .NET 9 microservices streaming live Binance prices through Redis Streams and SignalR to a React client, with an order state machine and an event-sourced wallet ledger.</p><div class="tags"><span>.NET 9</span><span>React</span><span>Redis</span><span>PostgreSQL</span><span>Docker</span></div><p class="more"><a href="https://github.com/absolut1on/crypto-trading-desk">View on GitHub →</a></p></article>
-        <article class="card project"><h3>XMLUI</h3><p>Internal reviewer for an open-source UI framework: tested projects against it, reported issues with root cause and repro steps, and became the go-to person while docs were thin.</p><div class="tags"><span>TypeScript</span><span>React</span><span>SCSS</span></div><p class="more"><a href="https://github.com/xmlui-org/xmlui">XMLUI on GitHub →</a></p></article>
-        <article class="card project"><h3>Koala Engine</h3><p>3D game engine written in C-style C++ with a Vulkan renderer and no third-party libraries. Its own platform layer for Windows and Linux (X11/XCB), built with CMake and Ninja.</p><div class="tags"><span>C++</span><span>Vulkan</span><span>CMake</span><span>Windows</span><span>Linux</span></div></article>
-        <article class="card project"><h3>Networking Stack</h3><p>My own networking stack from raw TCP/UDP sockets up: HTTP, FTP and SFTP over TLS 1.2, certificate validation and an async, event-driven API with no external dependencies.</p><div class="tags"><span>HTTP</span><span>TCP</span><span>UDP</span><span>FTP</span><span>SFTP</span><span>TLS</span></div></article>
+        <article class="card project"><p class="label">Solo build · Open source</p><h3>Crypto Trading Desk</h3><p>Real-time trading desk: two .NET 9 microservices streaming live Binance prices through Redis Streams and SignalR to a React client, with an order state machine and an event-sourced wallet ledger.</p><div class="tags"><span>.NET 9</span><span>React</span><span>Redis</span><span>PostgreSQL</span><span>Docker</span></div><p class="more"><a href="https://github.com/absolut1on/crypto-trading-desk">View on GitHub →</a></p></article>
+        <article class="card project"><p class="label">Open source · My part: reviewer</p><h3>XMLUI</h3><p>Internal reviewer for an open-source UI framework: tested projects against it, reported issues with root cause and repro steps, and became the go-to person while docs were thin.</p><div class="tags"><span>TypeScript</span><span>React</span><span>SCSS</span></div><p class="more"><a href="https://github.com/xmlui-org/xmlui">XMLUI on GitHub →</a></p></article>
+        <article class="card project"><p class="label">Personal · In development</p><h3>Koala Engine</h3><p>3D game engine written in C-style C++ with a Vulkan renderer and no third-party libraries. Its own platform layer for Windows and Linux (X11/XCB), built with CMake and Ninja.</p><div class="tags"><span>C++</span><span>Vulkan</span><span>CMake</span><span>Windows</span><span>Linux</span></div></article>
+        <article class="card project"><p class="label">Personal · From scratch</p><h3>Networking Stack</h3><p>My own networking stack from raw TCP/UDP sockets up: HTTP, FTP and SFTP over TLS 1.2, certificate validation and an async, event-driven API with no external dependencies.</p><div class="tags"><span>HTTP</span><span>TCP</span><span>UDP</span><span>FTP</span><span>SFTP</span><span>TLS</span></div></article>
       </div>
     </div>
   </section>
@@ -269,6 +299,29 @@
     io.unobserve(e.target);
   }), { threshold: .15 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const hdr = document.querySelector('header'), bar = document.querySelector('.progress');
+  const onScroll = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+    hdr.classList.toggle('scrolled', scrollY > innerHeight * .6);
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // highlight the nav link of whichever section crosses the middle of the screen
+  const links = document.querySelectorAll('nav a');
+  const navIo = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) links.forEach(a => a.classList.toggle('active', a.hash === '#' + e.target.id));
+  }), { rootMargin: '-50% 0px -50% 0px' });
+  document.querySelectorAll('main section[id]').forEach(s => navIo.observe(s));
+
+  // narrow-screen menu: toggle open, close on link click or Escape
+  const menuBtn = document.querySelector('.menu-btn');
+  const setMenu = open => { hdr.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', open); };
+  menuBtn.addEventListener('click', () => setMenu(!hdr.classList.contains('open')));
+  links.forEach(a => a.addEventListener('click', () => setMenu(false)));
+  addEventListener('keydown', e => e.key === 'Escape' && setMenu(false));
 
   // skills drift like a marquee but stay user-scrollable; pauses while hovered, focused or touched
   const sk = document.querySelector('#skills .carousel');
