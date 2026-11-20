@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marko Kushta — Software Engineer</title>
+<meta name="description" content="Marko Kushta, backend software engineer in Tirana, Albania. C#/.NET, TypeScript, C++, Java, Rust.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #061440; --card: #0c2266; --band: #0a1c55;
+    --text: #eef8ff; --body: #b4d2ee; --muted: #86a8cc;
+    --acc: #ff9ccb; --ok: #4fd3ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: radial-gradient(#ffffff14 1px, transparent 1px) 0 0 / 24px 24px fixed, radial-gradient(ellipse at 60% 0%, #1b8fe0 0%, #0b3a9e 35%, var(--bg) 75%) fixed var(--bg); color: var(--body); font: 400 1rem/1.6 Inter, system-ui, sans-serif; overflow-x: hidden; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: Anton, Impact, sans-serif; text-transform: uppercase; color: var(--text); line-height: .95; font-weight: 400; }
+  .wrap { max-width: 1150px; margin: 0 auto; padding: 0 16px; }
+  section { padding: clamp(64px, 10vw, 128px) 0; }
+  .num { font-family: Anton, sans-serif; color: var(--acc); font-size: .9rem; letter-spacing: .1em; }
+  .script { font-family: "Mrs Saint Delafield", cursive; text-transform: none; color: var(--acc); font-weight: 400; }
+
+  /* header */
+  header { position: fixed; inset: 0 0 auto; z-index: 10; backdrop-filter: blur(12px); background: rgb(6 20 64 / .7); border-bottom: 1px solid #ffffff10; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: Anton, sans-serif; font-size: 1.4rem; color: var(--text); text-decoration: none; }
+  nav { display: flex; gap: 24px; }
+  nav a { text-decoration: none; font-size: .85rem; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; }
+  nav a:hover, nav a:focus-visible { color: var(--acc); }
+  @media (max-width: 1040px) { nav { display: none; } }
+
+  /* hero */
+  #home { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 96px; }
+  .status { display: inline-flex; align-items: center; gap: 8px; font-size: .85rem; margin-bottom: 24px; }
+  .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 10px var(--ok); }
+  #home h1 { font-size: clamp(4rem, 16vw, 13rem); }
+  #home h1 .script { display: block; font-size: .45em; margin-top: -.1em; }
+  .tagline { max-width: 520px; font-size: 1.15rem; margin-top: 24px; }
+
+  /* hero extras: giant scrolling name, floating stickers, signature */
+  #home { position: relative; overflow: hidden; }
+  #home .wrap { position: relative; width: 100%; }
+  .name-track { position: absolute; top: 50%; left: 0; translate: 0 -50%; white-space: nowrap; pointer-events: none; font-family: Anton, sans-serif; font-size: clamp(8rem, 30vw, 22rem); text-transform: uppercase; line-height: 1; color: transparent; -webkit-text-stroke: 1px #ffffff1c; }
+  .name-track span { display: inline-block; animation: scroll 40s linear infinite; }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+  .sticker { position: absolute; z-index: 1; font: 600 .75rem Inter, sans-serif; text-transform: uppercase; letter-spacing: .06em; padding: 8px 14px; border-radius: 999px; background: var(--acc); color: var(--bg); box-shadow: 0 8px 24px #0006; animation: float 6s ease-in-out infinite; }
+  .sticker:nth-of-type(2) { background: var(--ok); animation-delay: -2s; }
+  .sticker:nth-of-type(3) { background: var(--text); animation-delay: -4s; }
+  @keyframes float { 50% { transform: translateY(-14px); } }
+  @media (max-width: 720px) { .sticker { display: none; } }
+  .signature { font-family: "Mrs Saint Delafield", cursive; font-size: 3.5rem; line-height: 1; color: var(--acc); margin-top: 20px; }
+
+  /* stats band */
+  #stats { background: var(--band); padding: 56px 0; }
+  .stats b { display: block; font: 400 clamp(3rem, 7vw, 5rem)/1 Anton, sans-serif; color: var(--text); }
+  .stats span { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+
+  .quote { font: 400 clamp(1.8rem, 4vw, 3rem)/1.1 Anton, sans-serif; text-transform: uppercase; color: var(--text); max-width: 860px; }
+  .quote em { font-style: normal; color: var(--ok); }
+
+  #statement h2 { font-size: clamp(2.5rem, 7vw, 5.5rem); max-width: 900px; }
+  #statement h2 em { font-style: normal; color: var(--ok); }
+
+  /* cards */
+  .head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; }
+  .head h2 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .card { background: var(--card); border: 1px solid #ffffff0d; border-radius: 16px; padding: 28px; }
+  .card h3 { font-size: 2.4rem; }
+  /* subgrid lines up title / text / tags / link rows across cards in the same row */
+  .project { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 8px; }
+  .project .tags { align-self: start; }
+  .more { align-self: end; padding-top: 8px; }
+  .card p strong { color: var(--text); }
+  .bio { font-size: 1.1rem; max-width: 720px; margin-top: 32px; }
+
+  /* experience carousel */
+  .carousel { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 16px; scrollbar-width: thin; scrollbar-color: var(--acc) transparent; }
+  .carousel .card { flex: 0 0 min(340px, 85vw); scroll-snap-align: start; }
+  .carousel .card h3 { font-size: 1.6rem; color: var(--text); margin: 8px 0; }
+  .when { font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+
+  .card ul { padding-left: 18px; margin-top: 8px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .tags span { font-size: .8rem; border: 1px solid #ffffff20; border-radius: 999px; padding: 4px 12px; }
+  .project a { color: var(--acc); font-weight: 600; text-decoration: none; }
+  .project a:hover { text-decoration: underline; }
+
+  /* contact */
+  #contact { background: var(--band); text-align: center; }
+  #contact h2 { font-size: clamp(3rem, 10vw, 8rem); }
+  .btn { display: inline-block; margin-top: 32px; background: var(--acc); color: var(--bg); text-decoration: none; font-weight: 600; padding: 16px 32px; border-radius: 999px; }
+  .btn.ghost { background: none; color: var(--text); border: 1px solid #ffffff30; margin-left: 8px; }
+  .links { display: flex; justify-content: center; gap: 24px; margin-top: 32px; }
+  footer { text-align: center; padding: 32px 16px; font-size: .8rem; color: var(--muted); }
+
+  /* scroll reveal */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s, transform .8s; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .name-track span, .sticker { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+  @media print { header, .name-track, .sticker { display: none; } .reveal { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#home">MK.</a>
+    <nav aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#motivation">Motivation</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#interests">Interests</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="home">
+    <div class="name-track" aria-hidden="true"><span>Marko Kushta — Marko Kushta — Marko Kushta — Marko Kushta — </span></div>
+    <div class="wrap">
+      <span class="sticker" style="top:0;right:8%;rotate:6deg" aria-hidden="true">Tirana, AL</span>
+      <span class="sticker" style="top:45%;right:2%;rotate:-8deg" aria-hidden="true">Backend &amp; real-time</span>
+      <span class="sticker" style="bottom:0;right:18%;rotate:4deg" aria-hidden="true">Ships in Rust</span>
+      <p class="status">Open to new opportunities</p>
+      <h1>Marko Kushta <span class="script">software engineer</span></h1>
+      <p class="tagline">Backend-focused engineer building .NET services, networking libraries and real-time systems. Based in Tirana, Albania.</p>
+      <p class="signature" aria-hidden="true">Marko</p>
+    </div>
+  </section>
+
+  <section id="statement">
+    <div class="wrap reveal"><h2>Simplicity <em>is quality.</em></h2></div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="head reveal"><span class="num">01</span><h2>About</h2></div>
+      <div class="grid reveal">
+        <div class="card"><h3>Tirana</h3><p><strong>Based</strong> in Albania, working remote</p></div>
+        <div class="card"><h3>2</h3><p><strong>Languages</strong> spoken: Albanian (native), English (fluent)</p></div>
+        <div class="card"><h3>Backend</h3><p><strong>Focus</strong>: .NET services, networking and real-time systems</p></div>
+      </div>
+      <p class="bio reveal">I like owning things end-to-end, from architecture to production support. I've built FX trading and custodian banking systems for a large bank, and today I work on the cross-platform IPWorks networking libraries at /n software, debugging TLS at packet level and porting whole products to Rust. I got into code by writing World of Warcraft add-ons in Lua, and I still love a good debugging puzzle.</p>
+    </div>
+  </section>
+
+  <section id="stats">
+    <div class="wrap grid stats reveal">
+      <div><b data-count="3.5" data-suffix="+">3.5+</b><span>Years experience</span></div>
+      <div><b data-count="5">5</b><span>Languages in production</span></div>
+      <div><b data-count="3">3</b><span>Juniors mentored</span></div>    </div>
+  </section>
+
+  <section id="motivation">
+    <div class="wrap">
+      <div class="head reveal"><span class="num">02</span><h2>Motivation</h2></div>
+      <p class="quote reveal">Curious first. <em>Simple always.</em></p>
+      <p class="bio reveal">Years ago, hunting for a Skyrim modding tool, I landed on GitHub and spent hours reading someone else's code. The idea that people just share how things work, openly, hooked me for good. I'm still that curious: I benchmark things nobody asked me to, reverse-engineer tools with thin docs, and keep code simple so the next person doesn't need me to explain it. Next on the list: kernel development.</p>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="head reveal"><span class="num">03</span><h2>Experience</h2></div>
+      <div class="carousel reveal" tabindex="0" aria-label="Experience, scroll horizontally">
+        <article class="card"><p class="when">Jan 2025 — Now · Remote</p><h3>/n software</h3><p>Software Engineer, IPWorks libraries</p>
+          <ul>
+            <li>Sole engineer porting IPWorks IoT and SNMP from Java to Rust, shipped to customers</li>
+            <li>Sole owner of DAV Drive (WebDAV), from design to production support</li>
+            <li>Fixed a critical S/MIME bug that silently dropped the last encrypted block</li>
+            <li>Resolved TLS handshake hangs and disconnects with Wireshark and RFC research</li>
+            <li>Benchmarked Java virtual threads; my results set the product to JDK 24+</li>
+          </ul></article>
+        <article class="card"><p class="when">Jun 2023 — Jan 2025 · Tirana</p><h3>Greenleaf BSC</h3><p>Software Engineer, financial services</p>
+          <ul>
+            <li>Built the newest service of an 8-microservice FX trading module serving hundreds of thousands of daily clients</li>
+            <li>Designed authentication across three identity providers (Keycloak/OIDC and bank protocols)</li>
+            <li>Extended the Stateless library for multiple state machines per object</li>
+            <li>Led a multi-tenant SaaS upgrade with three junior developers; promoted to team lead after 8 months</li>
+          </ul></article>
+        <article class="card"><p class="when">2020 — 2024</p><h3>B.Sc. Computer Science</h3><p>Dual degree, SUNY Empire State College &amp; University of New York Tirana</p>
+          <ul>
+            <li>GPA 3.51/4.0 on a 100% scholarship</li>
+            <li>Thesis: exoplanet detection with machine learning</li>
+          </ul></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="head reveal"><span class="num">04</span><h2>Projects</h2></div>
+      <div class="grid reveal">
+        <article class="card project"><h3>Crypto Trading Desk</h3><p>Real-time trading desk: two .NET 9 microservices streaming live Binance prices through Redis Streams and SignalR to a React client, with an order state machine and an event-sourced wallet ledger.</p><div class="tags"><span>.NET 9</span><span>React</span><span>Redis</span><span>PostgreSQL</span><span>Docker</span></div><p class="more"><a href="https://github.com/absolut1on/crypto-trading-desk">View on GitHub →</a></p></article>
+        <article class="card project"><h3>XMLUI</h3><p>Internal reviewer for an open-source UI framework: tested projects against it, reported issues with root cause and repro steps, and became the go-to person while docs were thin.</p><div class="tags"><span>TypeScript</span><span>React</span><span>SCSS</span></div><p class="more"><a href="https://github.com/xmlui-org/xmlui">XMLUI on GitHub →</a></p></article>
+        <article class="card project"><h3>Koala Engine</h3><p>3D game engine written in C-style C++ with a Vulkan renderer and no third-party libraries. Its own platform layer for Windows and Linux (X11/XCB), built with CMake and Ninja.</p><div class="tags"><span>C++</span><span>Vulkan</span><span>CMake</span><span>Windows</span><span>Linux</span></div></article>
+        <article class="card project"><h3>Networking Stack</h3><p>My own networking stack from raw TCP/UDP sockets up: HTTP, FTP and SFTP over TLS 1.2, certificate validation and an async, event-driven API with no external dependencies.</p><div class="tags"><span>HTTP</span><span>TCP</span><span>UDP</span><span>FTP</span><span>SFTP</span><span>TLS</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="head reveal"><span class="num">05</span><h2>Skills</h2></div>
+      <div class="carousel reveal" tabindex="0" aria-label="Skills, scroll horizontally">
+        <div class="card"><p><strong>Languages</strong></p><div class="tags"><span>C# / .NET</span><span>TypeScript / Node.js</span><span>C++</span><span>Java</span><span>Rust</span><span>Python</span><span>SQL</span></div></div>
+        <div class="card"><p><strong>Backend &amp; architecture</strong></p><div class="tags"><span>ASP.NET Web API</span><span>Entity Framework</span><span>REST APIs</span><span>Microservices</span><span>Event-driven</span><span>Multi-tenant SaaS</span><span>State machines</span><span>Background services</span></div></div>
+        <div class="card"><p><strong>Data &amp; messaging</strong></p><div class="tags"><span>PostgreSQL</span><span>Supabase</span><span>Redis</span><span>Redis Streams</span><span>RabbitMQ</span><span>Apache Pulsar</span><span>SignalR</span><span>Query optimization</span></div></div>
+        <div class="card"><p><strong>Networking &amp; security</strong></p><div class="tags"><span>TCP/IP</span><span>UDP</span><span>HTTP</span><span>FTP / SFTP</span><span>MQTT</span><span>SNMP</span><span>SMTP</span><span>WebDAV</span><span>TLS</span><span>S/MIME</span><span>Certificates</span><span>OIDC / OAuth 2.0</span><span>Keycloak</span></div></div>
+        <div class="card"><p><strong>Systems &amp; graphics</strong></p><div class="tags"><span>Vulkan</span><span>Engine architecture</span><span>Node.js / V8 native interop</span><span>Memory &amp; object lifetime</span><span>Code generation</span><span>CMake</span><span>Ninja</span></div></div>
+        <div class="card"><p><strong>Frontend</strong></p><div class="tags"><span>Angular</span><span>React</span><span>TypeScript</span><span>CSS / SCSS</span><span>RadixUI</span><span>TanStack</span></div></div>
+        <div class="card"><p><strong>Tools &amp; practice</strong></p><div class="tags"><span>Git</span><span>Docker / Compose</span><span>Azure DevOps</span><span>CI/CD</span><span>Grafana</span><span>Wireshark</span><span>Postman</span><span>NUnit</span><span>Code review</span><span>Technical writing</span><span>Windows / Linux / macOS</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="interests">
+    <div class="wrap">
+      <div class="head reveal"><span class="num">06</span><h2>Interests</h2></div>
+      <div class="grid reveal">
+        <div class="card"><h3>Debugging</h3><p>Packet captures, RFCs and stream lifecycles. The harder the bug, the better.</p></div>
+        <div class="card"><h3>Open source</h3><p>Reviewing XMLUI, relying on .NET, Angular and RabbitMQ, and one day contributing to Ubuntu.</p></div>
+        <div class="card"><h3>Math &amp; physics</h3><p>Taught myself calculus before the curriculum got there.</p></div>        <div class="card"><h3>Game engines</h3><p>Rendering, the game loop and the low-level graphics work that makes it all run.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap reveal">
+      <span class="num">07</span>
+      <h2>Let's <span class="script">talk</span></h2>
+      <a class="btn" href="mailto:markokushta39@gmail.com">Email me</a><a class="btn ghost" href="cv.pdf" download>Download CV</a>
+      <div class="links"><a href="https://github.com/absolut1on">GitHub</a><a href="https://www.linkedin.com/in/marko-kushta-9912b822b/">LinkedIn</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>© <span id="y"></span> Marko Kushta</footer>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // counts from 0 to data-count; the markup already holds the final text for no-JS / reduced motion
+  const countUp = el => {
+    const end = +el.dataset.count, dec = (el.dataset.count.split('.')[1] || '').length, t0 = performance.now();
+    const step = t => {
+      const p = Math.min((t - t0) / 1500, 1);
+      el.textContent = (end * p).toFixed(dec) + (p === 1 ? el.dataset.suffix || '' : '');
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    if (!still) e.target.querySelectorAll('[data-count]').forEach(countUp);
+    io.unobserve(e.target);
+  }), { threshold: .15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // skills drift like a marquee but stay user-scrollable; pauses while hovered, focused or touched
+  const sk = document.querySelector('#skills .carousel');
+  if (!still) {
+    const first = sk.firstElementChild;
+    [...sk.children].forEach(c => { const d = c.cloneNode(true); d.setAttribute('aria-hidden', 'true'); sk.append(d); });
+    const period = () => sk.children[sk.children.length / 2].offsetLeft - first.offsetLeft;
+    sk.style.scrollSnapType = 'none';
+    let paused = false, pos = 0, last = performance.now();
+    ['pointerenter', 'focusin', 'touchstart'].forEach(e => sk.addEventListener(e, () => paused = true, { passive: true }));
+    ['pointerleave', 'focusout', 'touchend'].forEach(e => sk.addEventListener(e, () => { paused = false; pos = sk.scrollLeft; }, { passive: true }));
+    const tick = now => {
+      const dt = Math.min(now - last, 100); // cap so a backgrounded tab doesn't jump
+      last = now;
+      if (!paused) {
+        pos += dt * .03; // 30px per second
+        if (pos >= period()) pos -= period();
+        sk.scrollLeft = pos;
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+</script>
+</body>
+</html>
