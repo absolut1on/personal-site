@@ -72,6 +72,13 @@
   .mindset { list-style: none; counter-reset: m; margin-top: 48px; max-width: 860px; }
   .mindset li { counter-increment: m; display: flex; gap: 24px; align-items: baseline; border-top: 1px solid #ffffff1f; padding: 20px 0; font-size: clamp(1.2rem, 2.5vw, 1.6rem); color: var(--text); }
   .mindset li::before { content: counter(m, decimal-leading-zero); font: .9rem Anton, sans-serif; color: var(--acc); }
+  .shipped { margin-top: 56px; }
+  .shipped .when { margin-bottom: 16px; }
+  .shipped a.card { text-decoration: none; transition: border-color .2s, transform .2s; }
+  .shipped a.card:hover, .shipped a.card:focus-visible { border-color: var(--acc); transform: translateY(-3px); }
+  .shipped .carousel { padding-top: 4px; } /* room for the hover lift */
+  .shipped .label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .shipped h3 { font-size: 1.5rem; margin: 10px 0 16px; padding-bottom: 14px; border-bottom: 1px solid #ffffff1a; white-space: nowrap; }
   .label { font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--acc); }
 
   /* header extras: CV/Email appear after the hero, scroll progress line, active section link */
@@ -225,6 +232,17 @@
             <li>Thesis: exoplanet detection with machine learning</li>
           </ul></article>
       </div>
+      <div class="shipped">
+        <p class="when reveal">Shipped · products you can use today</p>
+        <div class="carousel auto reveal" tabindex="0" aria-label="Shipped products, scroll horizontally">
+          <a class="card" href="https://www.nsoftware.com/ipworks/iot/"><p class="label">/n software · Sole engineer</p><h3>IPWorks IoT · Rust ↗</h3><p>MQTT, AMQP, CoAP and STOMP library. I ported it from Java to Rust and shipped it.</p></a>
+          <a class="card" href="https://www.nsoftware.com/ipworks/snmp/"><p class="label">/n software · Sole engineer</p><h3>IPWorks SNMP · Rust ↗</h3><p>SNMP agent and manager library with SNMPv3 security. Ported from Java to Rust.</p></a>
+          <a class="card" href="https://www.nsoftware.com/ipworks"><p class="label">/n software · Engineer</p><h3>IPWorks ↗</h3><p>Secure communications library. Fixes across TLS, TCP, MQTT, SMTP and FTP, plus the Node.js/V8 bridge.</p></a>
+          <a class="card" href="https://www.callback.com/davdrive"><p class="label">Callback Technologies · Sole engineer</p><h3>DAV Drive ↗</h3><p>Mounts a WebDAV server as a local drive. Owned it from design to production.</p></a>
+          <a class="card" href="https://ailend.io/"><p class="label">Greenleaf BSC · Backend</p><h3>AILend ↗</h3><p>One profile, loan offers from partner banks across Albania.</p></a>
+          <a class="card" href="https://frutza.com/"><p class="label">Greenleaf BSC · Backend</p><h3>Frut'za ↗</h3><p>Online ordering and a cashback loyalty program for a Tirana café chain.</p></a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -243,7 +261,7 @@
   <section id="skills">
     <div class="wrap">
       <div class="head reveal"><span class="num">05</span><h2>Skills</h2></div>
-      <div class="carousel reveal" tabindex="0" aria-label="Skills, scroll horizontally">
+      <div class="carousel auto reveal" tabindex="0" aria-label="Skills, scroll horizontally">
         <div class="card"><p><strong>Languages</strong></p><div class="tags"><span>C# / .NET</span><span>TypeScript / Node.js</span><span>C++</span><span>Java</span><span>Rust</span><span>Python</span><span>SQL</span></div></div>
         <div class="card"><p><strong>Backend &amp; architecture</strong></p><div class="tags"><span>ASP.NET Web API</span><span>Entity Framework</span><span>REST APIs</span><span>Microservices</span><span>Event-driven</span><span>Multi-tenant SaaS</span><span>State machines</span><span>Background services</span></div></div>
         <div class="card"><p><strong>Data &amp; messaging</strong></p><div class="tags"><span>PostgreSQL</span><span>Supabase</span><span>Redis</span><span>Redis Streams</span><span>RabbitMQ</span><span>Apache Pulsar</span><span>SignalR</span><span>Query optimization</span></div></div>
@@ -323,9 +341,8 @@
   links.forEach(a => a.addEventListener('click', () => setMenu(false)));
   addEventListener('keydown', e => e.key === 'Escape' && setMenu(false));
 
-  // skills drift like a marquee but stay user-scrollable; pauses while hovered, focused or touched
-  const sk = document.querySelector('#skills .carousel');
-  if (!still) {
+  // .carousel.auto rows drift like a marquee but stay user-scrollable; pause while hovered, focused or touched
+  if (!still) document.querySelectorAll('.carousel.auto').forEach(sk => {
     const first = sk.firstElementChild;
     [...sk.children].forEach(c => { const d = c.cloneNode(true); d.setAttribute('aria-hidden', 'true'); sk.append(d); });
     const period = () => sk.children[sk.children.length / 2].offsetLeft - first.offsetLeft;
@@ -344,7 +361,7 @@
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
-  }
+  });
 </script>
 </body>
 </html>
